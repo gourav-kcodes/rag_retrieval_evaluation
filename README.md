@@ -44,8 +44,8 @@ mathematically impossible for it to introduce unsupported content. But
 correctness is low, because the extracted sentence is usually much longer
 and more verbose than the short reference answer, so token-level overlap
 with the reference is poor even when the right information was retrieved.
-**This is the whole reason these two metrics need to be reported
-separately**: an answer can be perfectly grounded and still score poorly on
+This is the whole reason these two metrics need to be reported
+separately, an answer can be perfectly grounded and still score poorly on
 matching a reference, and an answer can match a reference's wording closely
 while still introducing claims the context never made. Neither metric
 alone tells the full story.
@@ -91,7 +91,7 @@ them out is the actual point of building an evaluation harness:
 - **Correctness**: token-level F1 between the generated answer and the
   reference answer (the same style of metric used by the SQuAD benchmark).
 - **Lexical faithfulness**: the fraction of the answer's substantive words
-  that actually appear in the retrieved context — a proxy for groundedness,
+  that actually appear in the retrieved context - a proxy for groundedness,
   not a guarantee of it (see Limitations).
 - **LLM-judge faithfulness** (optional, only runs with an API key): asks
   Claude to directly rate whether an answer is supported, partially
