@@ -1,12 +1,3 @@
-"""
-End-to-end evaluation: builds both retrievers, scores them against the
-labeled question set, then generates answers (extractive always, Claude if
-ANTHROPIC_API_KEY is set) and scores those for correctness and faithfulness.
-
-Run from the project root:
-    python run_evaluation.py
-"""
-
 import json
 import os
 
