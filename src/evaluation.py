@@ -1,13 +1,3 @@
-"""
-Standard information-retrieval metrics, implemented from scratch rather than
-imported from a library — the formulas are short enough that hiding them
-behind a function call would cost more in transparency than it saves in
-typing, and writing them out is the actual point of an evaluation harness.
-
-All metrics here use binary relevance: a document is either relevant to a
-question or it isn't, per the labels in data/eval_set.json.
-"""
-
 import math
 
 import numpy as np
