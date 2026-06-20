@@ -1,16 +1,11 @@
 """
 Two interchangeable answer generators behind a common interface.
 
-ExtractiveGenerator needs nothing beyond what's already installed — it picks
+ExtractiveGenerator needs nothing beyond what's already installed - it picks
 the most relevant sentence(s) out of the retrieved documents themselves, so
 the answer is always a real excerpt, not a paraphrase. It can't hallucinate
 in the usual sense, but it also can't synthesize across documents or phrase
 things naturally.
-
-ClaudeGenerator calls the Anthropic API to actually write an answer grounded
-in the retrieved context. It's optional — only used if ANTHROPIC_API_KEY is
-set — which is what lets the rest of this project run with zero setup while
-still supporting a real LLM-backed comparison for anyone who wants one.
 """
 
 import os
