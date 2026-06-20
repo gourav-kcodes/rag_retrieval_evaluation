@@ -1,11 +1,3 @@
-"""
-Loading the document corpus and evaluation set.
-
-Both live as plain JSON files in data/ so the whole project is reproducible
-without downloading anything external — see the README for why this is a
-hand-built evaluation set rather than a standard IR benchmark.
-"""
-
 import json
 from pathlib import Path
 
