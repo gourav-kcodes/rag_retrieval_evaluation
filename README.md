@@ -1,7 +1,7 @@
 # RAG with a Real Retrieval Evaluation Harness
 
 A retrieval-augmented generation system where the evaluation is the actual
-point — not just "does it answer questions," but precision/recall/nDCG at
+point - not just does it answer questions, but precision/recall/nDCG at
 the retrieval stage, and separately scored correctness and faithfulness at
 the generation stage, with a labeled question set built specifically to
 expose where retrieval breaks down.
@@ -9,7 +9,7 @@ expose where retrieval breaks down.
 ## The result
 
 Retrieval looks excellent on questions that share vocabulary with their
-source document — and falls apart on questions that don't:
+source document - and falls apart on questions that don't:
 
 | | Easy (lexically aligned, n=38) | Hard (paraphrased, n=10) |
 |---|---|---|
@@ -24,7 +24,7 @@ This is the single most important finding in this project, and it's also
 the most common blind spot in RAG demos: if you only test with questions
 that happen to reuse the document's own words, both TF-IDF and BM25 will
 look almost perfect. The moment a question is phrased differently from the
-source text — which is exactly how real users ask questions - keyword-based
+source text - which is exactly how real users ask questions - keyword-based
 retrieval quality drops by roughly 25-30 points across every metric. BM25
 holds up modestly better than TF-IDF on the hard subset (nDCG@3: 0.713 vs.
 0.663), consistent with BM25's term-saturation and length-normalization
@@ -34,7 +34,7 @@ On generation, the extractive baseline produces a stark, clarifying result:
 
 | | Correctness (vs. reference answer) | Lexical faithfulness (vs. context) |
 |---|---|---|
-| Extractive | 0.274 | **1.000** |
+| Extractive | 0.274 | 1.000 |
 
 ![Generation quality by backend](results/figures/generation_quality.png)
 
@@ -78,8 +78,8 @@ them out is the actual point of building an evaluation harness:
 - **nDCG@k** - rewards relevant documents for appearing early, not just
   for appearing somewhere in the top k.
 
-**Generation** — pluggable backends in `src/generator.py`:
-- **Extractive** (default, no setup required): picks the most relevant
+**Generation** - pluggable backends in `src/generator.py`:
+- **Extractive**: picks the most relevant
   sentence(s) out of the retrieved documents via TF-IDF similarity to the
   query. Always grounded, never able to phrase things naturally or
   synthesize across documents.
@@ -102,15 +102,15 @@ them out is the actual point of building an evaluation harness:
 
 - **The evaluation set is small (48 questions) and hand-built by one
   person**, including the difficulty labels. It's useful for showing
-  *relative* differences between methods and exposing a real failure
+  relative differences between methods and exposing a real failure
   mode (paraphrase sensitivity), but the absolute numbers shouldn't be
   read as "BM25 is a 0.896 nDCG retriever" in any general sense - they're
   specific to this corpus and these questions.
-- **Lexical faithfulness is a proxy, not a hallucination detector.** It
+- **Lexical faithfulness is a proxy, not a hallucination detector** - It
   checks whether an answer's words appear somewhere in the retrieved
   context, which means an answer that reuses real context words but
   combines them into a claim the context never actually made would still
-  score as "faithful." The optional LLM-judge faithfulness check is more
+  score as faithful. The optional LLM-judge faithfulness check is more
   resistant to this failure mode, but it wasn't run by default in the
   results above, since it requires an API key.
 - **Only 10 "hard" questions exist**, all written by the same person who
