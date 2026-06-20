@@ -14,9 +14,8 @@ Two things are being measured here, and they are not the same question:
    be right.
 
 The lexical faithfulness score here is a proxy, not a perfect hallucination
-detector — see the Limitations section in the README for exactly what it
-can and can't catch. An optional LLM-judge faithfulness score is also
-provided for a more semantic (but slower, API-dependent) check.
+detector - see the Limitations section in the README for exactly what it
+can and can't catch.
 """
 
 import os
@@ -79,11 +78,7 @@ def lexical_faithfulness(answer: str, context_docs: list[dict]) -> float:
 
 
 def llm_judge_faithfulness(query: str, answer: str, context_docs: list[dict]) -> float | None:
-    """Asks Claude to rate whether the answer is supported by the context.
-    Returns None (rather than raising) if no API key is configured, so
-    callers can skip this check gracefully instead of crashing the whole
-    evaluation run over an optional feature."""
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
+       api_key = os.environ.get("ANTHROPIC_API_KEY")
     if not api_key:
         return None
 
