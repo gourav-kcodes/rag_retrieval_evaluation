@@ -24,7 +24,7 @@ This is the single most important finding in this project, and it's also
 the most common blind spot in RAG demos: if you only test with questions
 that happen to reuse the document's own words, both TF-IDF and BM25 will
 look almost perfect. The moment a question is phrased differently from the
-source text — which is exactly how real users ask questions — keyword-based
+source text — which is exactly how real users ask questions - keyword-based
 retrieval quality drops by roughly 25-30 points across every metric. BM25
 holds up modestly better than TF-IDF on the hard subset (nDCG@3: 0.713 vs.
 0.663), consistent with BM25's term-saturation and length-normalization
@@ -38,7 +38,7 @@ On generation, the extractive baseline produces a stark, clarifying result:
 
 ![Generation quality by backend](results/figures/generation_quality.png)
 
-Faithfulness is perfect by construction — the extractive generator only
+Faithfulness is perfect by construction - the extractive generator only
 ever outputs sentences copied directly from the retrieved context, so it is
 mathematically impossible for it to introduce unsupported content. But
 correctness is low, because the extracted sentence is usually much longer
@@ -54,37 +54,28 @@ alone tells the full story.
 
 - **Corpus**: 38 short, hand-written documents covering ML and statistics
   concepts (precision/recall, overfitting, propensity score matching,
-  transformers, BM25 itself, and so on — see `data/corpus.json`).
+  transformers, BM25 itself, and so on - see `data/corpus.json`).
 - **Evaluation set**: 48 questions in `data/eval_set.json`, each labeled with
   the document(s) that actually answer it and a short reference answer.
   38 are "easy" (phrased close to the source document's own wording), 10
   are "hard" (deliberately paraphrased to avoid shared vocabulary with the
   source document, while still being answerable from it).
 
-**This is a hand-built evaluation set, not a standard IR benchmark** like
-BEIR or MS MARCO. That's a deliberate, stated tradeoff, not an oversight:
-standard benchmarks are hosted in places this project's build environment
-couldn't reach, and a small, fully-inspectable labeled set — where anyone
-can open the JSON and check exactly what's being measured and why — is more
-useful for understanding what the metrics actually mean than a black-box
-download would have been. It is, however, small. See
-[Limitations](#limitations) for what that does and doesn't support claiming.
-
 ## Method
 
-**Retrieval** — two interchangeable retrievers, implemented in
+**Retrieval** - two interchangeable retrievers, implemented in
 `src/retriever.py`:
 - **TF-IDF + cosine similarity**, the classic vector-space baseline.
 - **BM25**, which improves on plain term-frequency scoring with length
   normalization and term-frequency saturation.
 
-**Retrieval metrics** — implemented from scratch in `src/evaluation.py`,
+**Retrieval metrics** - implemented from scratch in `src/evaluation.py`,
 not imported from a library, because the formulas are short and writing
 them out is the actual point of building an evaluation harness:
-- **Precision@k / Recall@k** — standard set-overlap metrics.
-- **MRR** (Mean Reciprocal Rank) — rewards finding *a* relevant document
+- **Precision@k / Recall@k** - standard set-overlap metrics.
+- **MRR** (Mean Reciprocal Rank) — rewards finding a relevant document
   early, regardless of how many relevant documents exist.
-- **nDCG@k** — rewards relevant documents for appearing *early*, not just
+- **nDCG@k** - rewards relevant documents for appearing early, not just
   for appearing somewhere in the top k.
 
 **Generation** — pluggable backends in `src/generator.py`:
@@ -104,7 +95,7 @@ them out is the actual point of building an evaluation harness:
   not a guarantee of it (see Limitations).
 - **LLM-judge faithfulness** (optional, only runs with an API key): asks
   Claude to directly rate whether an answer is supported, partially
-  supported, or unsupported by the retrieved context — a more semantic
+  supported, or unsupported by the retrieved context - a more semantic
   check than lexical overlap, at the cost of needing an API call per answer.
 
 ## Limitations
@@ -113,7 +104,7 @@ them out is the actual point of building an evaluation harness:
   person**, including the difficulty labels. It's useful for showing
   *relative* differences between methods and exposing a real failure
   mode (paraphrase sensitivity), but the absolute numbers shouldn't be
-  read as "BM25 is a 0.896 nDCG retriever" in any general sense — they're
+  read as "BM25 is a 0.896 nDCG retriever" in any general sense - they're
   specific to this corpus and these questions.
 - **Lexical faithfulness is a proxy, not a hallucination detector.** It
   checks whether an answer's words appear somewhere in the retrieved
@@ -125,11 +116,11 @@ them out is the actual point of building an evaluation harness:
 - **Only 10 "hard" questions exist**, all written by the same person who
   wrote the corpus. A larger, independently-written paraphrase set would
   give a more reliable estimate of how much retrieval quality really drops
-  — the direction of the effect (it drops) is clear; the precise size of
+  - the direction of the effect (it drops) is clear; the precise size of
   the drop is not pinned down to the last decimal by 10 examples.
 - **Neither retriever uses semantic embeddings.** TF-IDF and BM25 are both
   fundamentally keyword-matching methods, which is exactly why they
-  struggle on paraphrased questions — they have no way to know "flop on the
+  struggle on paraphrased questions - they have no way to know "flop on the
   real exam" and "high test error" are related ideas if the words don't
   overlap. A dense embedding retriever (or a hybrid of lexical + dense)
   would be the natural next step to address this specific, demonstrated
@@ -139,7 +130,7 @@ them out is the actual point of building an evaluation harness:
 
 ```
 rag-eval/
-├── run_evaluation.py        # end-to-end pipeline — run this
+├── run_evaluation.py        # end-to-end pipeline - run this
 ├── app.py                   # interactive Streamlit demo
 ├── data/
 │   ├── corpus.json           # 38 hand-written knowledge base documents
@@ -165,7 +156,7 @@ python run_evaluation.py
 ```
 
 This regenerates everything in `results/` from the raw corpus and eval set
-— nothing is cached or checked in stale.
+- nothing is cached or checked in stale.
 
 To also run the optional Claude generation backend and LLM-judge
 faithfulness check:
