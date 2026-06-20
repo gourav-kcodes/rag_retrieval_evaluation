@@ -5,7 +5,7 @@ compare them directly rather than just trusting one method blindly.
 TF-IDF + cosine similarity is the classic vector-space baseline. BM25 is a
 generally stronger keyword-ranking function that accounts for document
 length and term-frequency saturation (see data/corpus.json's own BM25 entry
-for the full explanation — used here, not just described).
+for the full explanation).
 """
 
 import re
